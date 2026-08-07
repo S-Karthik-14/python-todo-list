@@ -2,39 +2,65 @@ tasks = []
 
 
 def display_menu():
+    print("====================================================\n")
     print("------------------TO-DO-LIST------------------\n")
+    print("====================================================\n")
     print("1. Add Task")
     print("2. View Tasks")
     print("3. Complete Task")
     print("4. Delete Task")
-    print("5. Exit")
+    print("5. Exit\n")
+    print("====================================================\n")
 
 
 def add_tasks():
     add = str(input("Enter the task to be added :"))
-    tasks.append(add)
-    print(f" '{add}' has been successfully added into the list! ")
+    if add.strip() == "":
+        print("Task cannot be empty!")
+        print("Try again..")
+    else:
+        tasks.append(add)
+        print(f" '{add}' has been successfully added into the list! ")
 
 
 def view_tasks():
-    print("This is the list of tasks in your TO-DO list: ")
-    for task in tasks:
-        print(task)
+    if tasks == []:
+        print("No tasks available!")
+    else:
+        print("This is the list of tasks in your TO-DO list: ")
+        for index, task in enumerate(tasks, 1):
+            print(f"{index}.  {task}")
 
 
 def complete_tasks():
-    view_tasks()
-    task_number = int(input("Enter the number of the task that you have completed: "))
-    current_task = tasks[task_number - 1]
-    tasks[task_number - 1] = f"✓ {current_task}"
-    print("Task marked as completed!")
+    if tasks == []:
+        print("No tasks available!")
+        return
+    else:
+        view_tasks()
+        task_number = int(input("Enter the number of the task that you have completed: "))
+    if task_number < 1 or task_number > len(tasks):
+        print("Invalid input!")
+        print("Try again...")
+    else:
+        current_task = tasks[task_number - 1]
+        tasks[task_number - 1] = f"✓ {current_task}"
+        print("Task marked as completed!")
 
 
 def delete_tasks():
-    view_tasks()
-    task_number = int(input("Enter the number of the task that you want to delete: "))
-    tasks.pop(task_number - 1)
-    print("Task deleted successfully!")
+    if tasks == []:
+        print("No tasks available!")
+        return
+    else:
+        view_tasks()
+        task_number = int(input("Enter the number of the task that you want to delete: "))
+    if task_number < 1 or task_number > len(tasks):
+        print("Invalid input!")
+        print("Try again...")
+    else:
+        tasks.pop(task_number - 1)
+        print("Task deleted successfuly!")
 
 
 def exit():
@@ -45,8 +71,12 @@ def main():
     while True:
         display_menu()
         user_input = int(input("Choose an option in number: "))
-        if user_input == 5:
-            print("Thank you for using the To-Do List!")
+        if user_input < 1 or user_input > 5:
+            print("Invalid input choose from (1 to 5)! ")
+            print("Try again...")
+            continue
+        elif user_input == 5:
+            print("Thank you for using the TO-DO list")
             break
         check_opt(user_input)
 
@@ -65,9 +95,4 @@ def check_opt(user_input):
 
 
 main()
-
-
-
-
-
 
