@@ -14,13 +14,16 @@ def display_menu():
 
 
 def add_tasks():
-    add = str(input("Enter the task to be added :"))
-    if add.strip() == "":
-        print("Task cannot be empty!")
-        print("Try again..")
-    else:
-        tasks.append(add)
-        print(f" '{add}' has been successfully added into the list! ")
+    while True:
+        add = str(input("Enter the task to be added :")).strip()
+        if add == "":
+            print("Task cannot be empty!")
+            print("Try again...")
+            continue
+        else:
+            tasks.append(add)
+            print(f" '{add}' has been successfully added into the list! ")
+            break
 
 
 def view_tasks():
@@ -33,34 +36,57 @@ def view_tasks():
 
 
 def complete_tasks():
-    if tasks == []:
-        print("No tasks available!")
-        return
-    else:
-        view_tasks()
-        task_number = int(input("Enter the number of the task that you have completed: "))
-    if task_number < 1 or task_number > len(tasks):
-        print("Invalid input!")
-        print("Try again...")
-    else:
-        current_task = tasks[task_number - 1]
-        tasks[task_number - 1] = f"✓ {current_task}"
-        print("Task marked as completed!")
+    while True:
+        if tasks == []:
+            print("No tasks available!")
+            return
+        else:
+            view_tasks()
+        try:
+            task_number = int(input("Enter the number of the task that you have completed: "))
+        except ValueError:
+            print("Invalid input!")
+            print(f"Please enter a task number between 1 and {len(tasks)}.")
+            print("Decimals, special characters,letters and blank input not permitted")
+            print("Try again...")
+            continue
+
+        if task_number < 1 or task_number > len(tasks):
+            print("Invalid input!")
+            print(f"Please enter a task number between 1 and {len(tasks)}.")
+            print("Try again...")
+            continue
+        else:
+            current_task = tasks[task_number - 1]
+            tasks[task_number - 1] = f"✓ {current_task}"
+            print("Task marked as completed!")
+            break
 
 
 def delete_tasks():
-    if tasks == []:
-        print("No tasks available!")
-        return
-    else:
-        view_tasks()
-        task_number = int(input("Enter the number of the task that you want to delete: "))
-    if task_number < 1 or task_number > len(tasks):
-        print("Invalid input!")
-        print("Try again...")
-    else:
-        tasks.pop(task_number - 1)
-        print("Task deleted successfuly!")
+    while True:
+        if tasks == []:
+            print("No tasks available!")
+            return
+        else:
+            try:
+                view_tasks()
+                task_number = int(input("Enter the number of the task that you want to delete: "))
+            except ValueError:
+                print("Invalid input!")
+                print(f"Please enter a task number between 1 and {len(tasks)}.")
+                print("Decimals, special characters,letters and blank input not permitted")
+                print("Try again...")
+                continue
+            if task_number < 1 or task_number > len(tasks):
+                print("Invalid input!")
+                print(f"Please enter a task number between 1 and {len(tasks)}.")
+                print("Try again...")
+                continue
+            else:
+                tasks.pop(task_number - 1)
+                print("Task deleted successfully!")
+                break
 
 
 def exit():
@@ -70,7 +96,14 @@ def exit():
 def main():
     while True:
         display_menu()
-        user_input = int(input("Choose an option in number: "))
+        try:
+            user_input = int(input("Choose an option in number: "))
+        except ValueError:
+            print("Invalid Input!")
+            print("Only numbers 1 to 5 are allowed.")
+            print("Decimals, special characters,letters and blank input not permitted")
+            print("Try again...")
+            continue
         if user_input < 1 or user_input > 5:
             print("Invalid input choose from (1 to 5)! ")
             print("Try again...")
@@ -95,4 +128,7 @@ def check_opt(user_input):
 
 
 main()
+
+
+
 
