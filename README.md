@@ -16,3 +16,13 @@ A command-line To-Do List application built with Python.
 - Validate task numbers before completing or deleting.
 - Handle empty task list when completing or deleting tasks.
 - Validate menu option input (1–5).
+
+  ### Version 1.2
+
+* Added `try` / `except` exception handling for invalid input
+* Improved input validation for menu options, task completion, and deletion
+* Handles letters, special characters, decimals, and blank input without crashing
+* Re-prompts the user after invalid input
+* Removes unnecessary leading and trailing spaces from tasks
+* Improved consistency across task input functions
+
