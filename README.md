@@ -26,3 +26,13 @@ A command-line To-Do List application built with Python.
 * Removes unnecessary leading and trailing spaces from tasks
 * Improved consistency across task input functions
 
+  ## Version 2.0
+
+* Added task editing
+* Added task search
+* Prevents empty edited tasks
+* Preserves completed status when editing
+* Prevents completing tasks more than once
+* Updated menu for new features
+
+
