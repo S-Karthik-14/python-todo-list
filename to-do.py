@@ -1,4 +1,8 @@
+
+import json
+
 tasks = []
+
 
 def display_menu():
     print("====================================================\n")
@@ -12,9 +16,10 @@ def display_menu():
     print("6. Search Tasks")
     print("7. Exit\n")
     print("====================================================\n")
-    
+
+
 def add_tasks():
-    while True: 
+    while True:
         add = str(input("Enter the task to be added :")).strip()
         if add == "":
             print("Task cannot be empty!")
@@ -22,16 +27,19 @@ def add_tasks():
             continue
         else:
             tasks.append(add)
+            save_tasks()
             print(f" '{add}' has been successfully added into the list! ")
             break
-    
+
+
 def view_tasks():
-    if tasks == [] :
+    if tasks == []:
         print("No tasks available!")
     else:
         print("This is the list of tasks in your TO-DO list: ")
-        for index, task in enumerate(tasks,1) :
+        for index, task in enumerate(tasks, 1):
             print(f"{index}.  {task}")
+
 
 def complete_tasks():
     while True:
@@ -44,11 +52,11 @@ def complete_tasks():
             task_number = int(input("Enter the number of the task that you have completed: "))
         except ValueError:
             print("Invalid input!")
-            print (f"Please enter a task number between 1 and {len(tasks)}.")
+            print(f"Please enter a task number between 1 and {len(tasks)}.")
             print("Decimals, special characters,letters and blank input not permitted")
             print("Try again...")
             continue
-            
+
         if task_number < 1 or task_number > len(tasks):
             print("Invalid input!")
             print(f"Please enter a task number between 1 and {len(tasks)}.")
@@ -57,12 +65,14 @@ def complete_tasks():
         else:
             current_task = tasks[task_number - 1]
             if "✓" in current_task:
-                 print("Task has already been completed!")
-                 continue
+                print("Task has already been completed!")
+                continue
             tasks[task_number - 1] = f"✓ {current_task}"
+            save_tasks()
             print("Task marked as completed!")
             break
-    
+
+
 def delete_tasks():
     while True:
         if tasks == []:
@@ -74,22 +84,24 @@ def delete_tasks():
                 task_number = int(input("Enter the number of the task that you want to delete: "))
             except ValueError:
                 print("Invalid input!")
-                print (f"Please enter a task number between 1 and {len(tasks)}.")
+                print(f"Please enter a task number between 1 and {len(tasks)}.")
                 print("Decimals, special characters,letters and blank input not permitted")
-                print("Try again...") 
+                print("Try again...")
                 continue
             if task_number < 1 or task_number > len(tasks):
                 print("Invalid input!")
-                print (f"Please enter a task number between 1 and {len(tasks)}.")
+                print(f"Please enter a task number between 1 and {len(tasks)}.")
                 print("Try again...")
                 continue
             else:
                 tasks.pop(task_number - 1)
+                save_tasks()
                 print("Task deleted successfully!")
                 break
-            
+
+
 def edit_tasks():
-     while True:
+    while True:
         if tasks == []:
             print("No tasks available!")
             return
@@ -99,16 +111,16 @@ def edit_tasks():
                 task_number = int(input("Enter the number of the task that you want to edit: "))
             except ValueError:
                 print("Invalid input!")
-                print (f"Please enter a task number between 1 and {len(tasks)}.")
+                print(f"Please enter a task number between 1 and {len(tasks)}.")
                 print("Decimals, special characters,letters and blank input not permitted")
-                print("Try again...") 
+                print("Try again...")
                 continue
             if task_number < 1 or task_number > len(tasks):
                 print("Invalid input!")
-                print (f"Please enter a task number between 1 and {len(tasks)}.")
+                print(f"Please enter a task number between 1 and {len(tasks)}.")
                 print("Try again...")
-                continue  
-            current_task = tasks[task_number - 1] 
+                continue
+            current_task = tasks[task_number - 1]
             while True:
                 new_task = input("Enter the new task: ").strip()
                 if new_task == "":
@@ -117,13 +129,12 @@ def edit_tasks():
                     continue
                 break
             if "✓" in current_task:
-                    new_task = "✓ " + new_task
+                new_task = "✓ " + new_task
             tasks[task_number - 1] = new_task
+            save_tasks()
             print("Task edited successfully!")
             print("You can view the new list by clicking view list")
             break
-
-
 
 
 def search_tasks():
@@ -142,15 +153,29 @@ def search_tasks():
 
     if not found:
         print("Task not found!")
- 
- 
- 
-    
+
+
 def exit():
     return
-    
+
+
+def save_tasks():
+    with open("tasks.json", "w") as file:
+        json.dump(tasks, file, indent=4)
+
+
+def load_tasks():
+    try:
+        with open("tasks.json", "r") as file:
+            tasks = json.load(file)
+            return tasks
+    except FileNotFoundError:
+        tasks = []
+        return tasks
+
+
 def main():
-    while True: 
+    while True:
         display_menu()
         try:
             user_input = int(input("Choose an option in number: "))
@@ -165,15 +190,15 @@ def main():
             print("Try again...")
             continue
         elif user_input == 7:
-           print("Thank you for using the TO-DO list")
-           break
+            print("Thank you for using the TO-DO list")
+            break
         check_opt(user_input)
 
 
 def check_opt(user_input):
-    if user_input == 1 :
+    if user_input == 1:
         add_tasks()
-    elif user_input == 2 :
+    elif user_input == 2:
         view_tasks()
     elif user_input == 3:
         complete_tasks()
@@ -187,4 +212,11 @@ def check_opt(user_input):
         print("Invalid option!")
 
 
+tasks = load_tasks()
 main()
+
+
+
+ 
+    
+
