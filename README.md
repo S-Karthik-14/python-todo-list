@@ -35,4 +35,12 @@ A command-line To-Do List application built with Python.
 * Prevents completing tasks more than once
 * Updated menu for new features
 
+  ## Version 3.0
+
+* Added JSON file handling for persistent task storage
+* Added `save_tasks()` and `load_tasks()` functions
+* Tasks are automatically loaded when the program starts
+* Tasks are saved after adding, completing, deleting, and editing
+
+
 
